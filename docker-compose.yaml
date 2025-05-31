@@ -1,0 +1,23 @@
+version: '3.8' # Docker Compose dosya formatının sürümü
+
+services:
+  # Frontend Servisi (Nginx)
+  frontend:
+    build:
+      context: . # Dockerfile'ın bulunduğu dizin (proje kök dizini)
+      dockerfile: Dockerfile # Kullanılacak Dockerfile'ın adı (proje kök dizinindeki)
+    container_name: ai_tools_frontend_container # Container'a verilecek özel bir isim
+    ports:
+      - "8080:80" # Host'un 8080 portunu container'ın 80 portuna yönlendir
+    restart: unless-stopped # Container bir hata nedeniyle durursa veya Docker yeniden başlatılırsa otomatik olarak yeniden başlat (durdurulmadığı sürece)
+    # Volumes (henüz frontend için özel bir volume ihtiyacımız yok ama ileride gerekebilir)
+    # networks: (henüz tek servis olduğu için özel network tanımına gerek yok)
+
+# Volumes (Genel volume tanımları, ileride veritabanı için kullanacağız)
+# volumes:
+#   db_data:
+
+# Networks (Genel network tanımları, ileride servisler arası iletişim için kullanacağız)
+# networks:
+#   app_network:
+#     driver: bridge
