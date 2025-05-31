@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategori Detayı | AI Araçları Rehberi</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/category-detail.css">
+    <!-- JavaScript dosyaları -->
+    <script src="../assets/js/data.js" defer></script>
+    <script src="../assets/js/ui.js" defer></script>
+    <script src="../assets/js/category-detail.js" defer></script>
+    <script src="../assets/js/category-data.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <h1>AI Araçları Rehberi</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Ana Sayfa</a></li>
+                    <li><a href="../index.html#populer">Popüler Araçlar</a></li>
+                    <li><a href="../index.html#kategoriler">Kategoriler</a></li>
+                    <li><a href="../index.html#hakkimizda">Hakkımızda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container">
+        <ul class="breadcrumb" id="breadcrumb">
+            <!-- JavaScript ile doldurulacak -->
+        </ul>
+    </div>
+
+    <!-- Kategori Başlık -->
+    <section class="category-header">
+        <div class="container">
+            <div class="category-header-content" id="categoryHeader">
+                <!-- JavaScript ile doldurulacak -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Ana İçerik -->
+    <section class="category-content">
+        <div class="container">
+            <!-- Filtreler -->
+            <div class="filters">
+                <div class="filters-content">
+                    <div class="filter-group">
+                        <span class="filter-label">Sırala:</span>
+                        <div class="filter-options" id="sortOptions">
+                            <button class="filter-option active" data-sort="popular">Popüler</button>
+                            <button class="filter-option" data-sort="newest">Yeni Eklenen</button>
+                            <button class="filter-option" data-sort="name">İsim (A-Z)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <span class="filter-label">Fiyat:</span>
+                        <div class="filter-options" id="priceOptions">
+                            <button class="filter-option active" data-price="all">Tümü</button>
+                            <button class="filter-option" data-price="free">Ücretsiz</button>
+                            <button class="filter-option" data-price="freemium">Freemium</button>
+                            <button class="filter-option" data-price="premium">Ücretli</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-search">
+                        <i>🔍</i>
+                        <input type="text" id="categorySearch" placeholder="Bu kategoride ara...">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Araçlar Grid -->
+            <div class="tools-grid" id="toolsGrid">
+                <!-- JavaScript ile doldurulacak -->
+            </div>
+            
+            <!-- Sayfalama -->
+            <div class="pagination" id="pagination">
+                <!-- JavaScript ile doldurulacak -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI Araçları Rehberi</h3>
+                    <ul>
+                        <li><a href="../index.html">Ana Sayfa</a></li>
+                        <li><a href="../index.html#populer">Popüler Araçlar</a></li>
+                        <li><a href="../index.html#kategoriler">Kategoriler</a></li>
+                        <li><a href="../index.html#hakkimizda">Hakkımızda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kategoriler</h3>
+                    <ul id="footerCategories">
+                        <!-- JavaScript ile doldurulacak -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Yardım</h3>
+                    <ul>
+                        <li><a href="#">SSS</a></li>
+                        <li><a href="#">Destek</a></li>
+                        <li><a href="#">Gizlilik Politikası</a></li>
+                        <li><a href="#">Kullanım Şartları</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Bağlantılar</h3>
+                    <ul>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <span id="currentYear"></span> AI Araçları Rehberi. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

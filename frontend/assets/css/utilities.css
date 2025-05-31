@@ -1,0 +1,127 @@
+/**
+ * utilities.css
+ * Yardımcı sınıflar ve animasyonlar
+ */
+
+/* Animasyonlar */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide-in {
+    transform: translateX(-30px);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.slide-in.appear {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Margin ve Padding */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* Metinler */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--secondary-color); }
+.text-muted { color: #6c757d; }
+
+/* Ekranlar */
+.hidden { display: none; }
+
+@media (max-width: 768px) {
+    .hidden-md { display: none; }
+}
+
+@media (max-width: 480px) {
+    .hidden-sm { display: none; }
+}
+
+/* Container Çeşitleri */
+.container-sm {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.container-md {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+/* Flex */
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+/* Grid */
+.d-grid {
+    display: grid;
+}
+
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+.gap-4 { gap: 2rem; }
+
+/* Arka Plan */
+.bg-white { background-color: white; }
+.bg-light { background-color: var(--bg-color); }
+.bg-primary { background-color: var(--primary-color); }
+.bg-secondary { background-color: var(--secondary-color); }
+
+/* Görünürlük */
+.shadow { box-shadow: var(--box-shadow); }
+.rounded { border-radius: var(--border-radius); }

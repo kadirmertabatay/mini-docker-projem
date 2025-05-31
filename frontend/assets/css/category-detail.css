@@ -1,0 +1,396 @@
+/**
+ * category-detail.css
+ * Kategori detay sayfası için özel stiller
+ */
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    list-style: none;
+    padding: 15px 0;
+    font-size: 0.9rem;
+}
+
+.breadcrumb li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: "/";
+    margin: 0 8px;
+    color: #ccc;
+}
+
+.breadcrumb a {
+    color: #666;
+}
+
+.breadcrumb a:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumb li:last-child a {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Kategori Başlık */
+.category-header {
+    background-color: white;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.category-header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.category-icon-large {
+    font-size: 4rem;
+    color: var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.1);
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.category-info h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.category-info p {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 800px;
+}
+
+/* Filtreler */
+.filters {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 30px;
+}
+
+.filters-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.filter-options {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-option {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-option:hover {
+    background-color: #e5e5e5;
+}
+
+.filter-option.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.filter-search {
+    margin-left: auto;
+    position: relative;
+    min-width: 250px;
+}
+
+.filter-search input {
+    width: 100%;
+    padding: 8px 15px 8px 35px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    font-size: 0.9rem;
+}
+
+.filter-search i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+/* Araçlar Grid */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* Gelişmiş Tool Card */
+.tool-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tool-img {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-img-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s;
+}
+
+.tool-card:hover .tool-img-inner {
+    transform: scale(1.05);
+}
+
+.tool-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.tool-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--accent-color, #e74c3c);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.tool-badge.new {
+    background-color: var(--success-color, #2ecc71);
+}
+
+.tool-badge.popular {
+    background-color: var(--warning-color, #f39c12);
+}
+
+.tool-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tool-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.tool-title h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.tool-rating {
+    color: var(--warning-color, #f39c12);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.tool-rating span {
+    color: #666;
+    margin-left: 5px;
+}
+
+.tool-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.tool-tag {
+    background-color: var(--light-info, #d1ecf1);
+    color: var(--info-color, #3498db);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.tool-tag.free {
+    background-color: var(--light-success, #d4edda);
+    color: var(--success-color, #2ecc71);
+}
+
+.tool-tag.premium {
+    background-color: var(--light-warning, #fff3cd);
+    color: var(--warning-color, #f39c12);
+}
+
+.tool-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.tool-btn {
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.tool-btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+    flex-grow: 1;
+}
+
+.tool-btn.primary:hover {
+    background-color: var(--secondary-color);
+}
+
+.tool-btn.secondary {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid #ddd;
+    margin-left: 10px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tool-btn.secondary:hover {
+    background-color: #f5f5f5;
+}
+
+/* Sayfalama */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 5px;
+}
+
+.pagination-item {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pagination-item:hover {
+    background-color: #f5f5f5;
+}
+
+.pagination-item.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination-item.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .category-header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .filters-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-search {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .tools-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+}

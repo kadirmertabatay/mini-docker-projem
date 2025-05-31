@@ -1,0 +1,19 @@
+/**
+ * main.css
+ * Ana CSS dosyası - tüm bileşenleri içe aktarır
+ */
+
+/* Temel stiller ve değişkenler */
+@import 'base.css';
+
+/* Sayfa düzeni */
+@import 'layout.css';
+
+/* Bileşenler ve arayüz öğeleri */
+@import 'components.css';
+
+/* Yardımcı sınıflar ve animasyonlar */
+@import 'utilities.css';
+
+/* Duyarlı tasarım stillleri */
+@import 'responsive.css';

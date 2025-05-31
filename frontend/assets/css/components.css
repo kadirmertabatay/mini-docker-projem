@@ -1,0 +1,233 @@
+/**
+ * components.css
+ * Yeniden kullanılabilir UI bileşenleri
+ */
+
+/* Genel Bileşenler */
+.tools-list,
+.category-list {
+    display: grid;
+    gap: 20px;
+}
+
+.tools-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.category-list {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* Tool Card */
+.tool-card {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tool-img {
+    width: 100%;
+    height: 160px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.tool-card:hover .tool-img {
+    transform: scale(1.03);
+}
+
+.tool-content {
+    padding: 15px;
+}
+
+.tool-content h4 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.tool-content p {
+    color: #666;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.95rem;
+}
+
+/* Category Card */
+.category-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.category-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.category-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.category-card p {
+    color: #666;
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+
+/* Tags */
+.tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.tag {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--primary-color);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+/* Buttons */
+.tool-content a,
+.category-card a.main-link,
+.result-link {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.tool-content a:hover,
+.category-card a.main-link:hover,
+.result-link:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.clear-search-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.clear-search-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Subcategories */
+.subcategories {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.subcategory-list {
+    border-radius: var(--border-radius);
+    padding: 0;
+    margin-top: 5px;
+}
+
+.subcategory-item {
+    border-bottom: 1px solid #eee;
+    padding: 6px 0;
+}
+
+.subcategory-item:last-child {
+    border-bottom: none;
+}
+
+.subcategory-link {
+    display: block;
+    width: 100%;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    transition: all 0.2s;
+    padding: 3px 5px;
+}
+
+.subcategory-link:hover {
+    color: var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.05);
+    padding-left: 8px;
+    border-radius: 3px;
+}
+
+/* Search Results */
+.search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.no-results {
+    text-align: center;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+.no-results p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.search-result-item {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.search-result-item h4 {
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+.search-result-item p {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #666;
+}

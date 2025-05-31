@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Araçları Rehberi</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- JavaScript dosyaları -->
+    <script src="assets/js/data.js" defer></script>
+    <script src="assets/js/category-data.js" defer></script>
+    <script src="assets/js/ui.js" defer></script>
+    <script src="assets/js/search.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <h1>AI Araçları Rehberi</h1>
+            </div>
+            <nav>
+                <ul>
+                   <!-- <li><a href="#anasayfa">Ana Sayfa</a></li> -->
+                    <li><a href="#populer">Popüler Araçlar</a></li>
+                    <li><a href="#kategoriler">Kategoriler</a></li>
+                   <!-- <li><a href="#hakkimizda">Hakkımızda</a></li> -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Alan -->
+    <section class="hero" id="anasayfa">
+        <div class="container">
+            <h2>Yapay Zeka Dünyasını Keşfedin</h2>
+            <p>Günümüzün en iyi ve en kullanışlı AI araçlarını keşfedin, inceleyin ve hemen kullanmaya başlayın.</p>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="AI araçlarını ara...">
+                <button id="searchButton">🔍</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arama Sonuçları -->
+    <section id="searchResultsSection" style="display: none;">
+        <div class="container">
+            <div class="search-results-header">
+                <h3 id="resultsTitle">Arama Sonuçları</h3>
+                <button id="clearSearch" class="clear-search-btn">Temizle</button>
+            </div>
+            <div id="searchResults" class="tools-list"></div>
+        </div>
+    </section>
+
+    <!-- Popüler Araçlar -->
+    <section class="popular-tools" id="populer">
+        <div class="container">
+            <h3>Popüler AI Araçları</h3>
+            <div id="popularToolsList" class="tools-list">
+                <!-- Popüler araçlar JavaScript ile burada gösterilecek -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Kategoriler -->
+    <section class="categories" id="kategoriler">
+        <div class="container">
+            <h3>Kategoriler</h3>
+            <div id="categoryList" class="category-list">
+                <!-- Kategoriler JavaScript ile burada gösterilecek -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="hakkimizda">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI Araçları Rehberi</h3>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="index.html#populer">Popüler Araçlar</a></li>
+                        <li><a href="index.html#kategoriler">Kategoriler</a></li>
+                        <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kategoriler</h3>
+                    <ul id="footerCategories">
+                        <!-- JavaScript ile doldurulacak -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Yardım</h3>
+                    <ul>
+                        <li><a href="#">SSS</a></li>
+                        <li><a href="#">Destek</a></li>
+                        <li><a href="#">Gizlilik Politikası</a></li>
+                        <li><a href="#">Kullanım Şartları</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Bağlantılar</h3>
+                    <ul>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; <span id="currentYear"></span> AI Araçları Rehberi. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
