@@ -1,211 +1,130 @@
-// main.js - Ana uygulama başlatma ve yönetim
+// main.js - Ana sayfa mantığı (API Entegreli)
 
-/**
- * Sayfa tamamen yüklendiğinde çalışacak kod
- */
-document.addEventListener('DOMContentLoaded', function() {
-    // UI içeriklerini yükle
-    initializeApplication();
-    
-    // URL parametrelerini kontrol et
-    checkUrlParameters();
-    
-    console.log('AI Araçları Rehberi başarıyla yüklendi!');
+document.addEventListener('DOMContentLoaded', async () => {
+    // Popüler araçları ve kategorileri yükle
+    // ui.js'deki render fonksiyonları artık async olduğu için await ile çağırıyoruz
+    if (window.ui && typeof window.ui.renderPopularTools === 'function') {
+        await window.ui.renderPopularTools();
+    } else {
+        console.error('ui.renderPopularTools function not found. Make sure ui.js is loaded correctly and window.ui is defined.');
+        const popularToolsList = document.getElementById('popularToolsList');
+        if (popularToolsList) popularToolsList.innerHTML = '<p>Popüler araçlar yüklenemedi (UI hatası).</p>';
+    }
+
+    if (window.ui && typeof window.ui.renderCategories === 'function') {
+        await window.ui.renderCategories(); // Bu fonksiyon içinde updateFooterCategories de çağrılıyor
+    } else {
+        console.error('ui.renderCategories function not found.');
+        const categoryList = document.getElementById('categoryList');
+        if (categoryList) categoryList.innerHTML = '<p>Kategoriler yüklenemedi (UI hatası).</p>';
+    }
+
+    // Yıl bilgisini güncelle (ui.js'den çağrılabilir veya burada kalabilir)
+    if (window.ui && typeof window.ui.updateFooterYear === 'function') {
+        window.ui.updateFooterYear();
+    } else {
+        const currentYearSpan = document.getElementById('currentYear');
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+    }
+
+    // Arama butonu olay dinleyicileri
+    const searchButton = document.getElementById('searchButton');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchButton = document.getElementById('clearSearch');
+
+    if (searchButton && searchInput) {
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+    }
+    if (clearSearchButton) {
+        clearSearchButton.addEventListener('click', clearSearchResultsAndShowMain);
+    }
 });
 
-/**
- * Uygulamayı başlat ve temel bileşenleri yükle
- */
-function initializeApplication() {
-    // Ana sayfa içeriklerini yükle
-    if (isHomePage()) {
-        UI.renderPopularTools();
-        UI.renderCategories();
-    }
-    
-    // Footer yılını güncelle
-    UI.updateFooterYear();
-    
-    // Animasyonları başlat
-    initAnimations();
-    
-    // Responsive özellikler için event listener'lar ekle
-    setupResponsiveFeatures();
-}
+// Arama Fonksiyonları
+async function performSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchTerm = searchInput.value.trim();
+    const searchResultsSection = document.getElementById('searchResultsSection');
+    const searchResultsContainer = document.getElementById('searchResults');
+    const resultsTitle = document.getElementById('resultsTitle');
 
-/**
- * Geçerli sayfanın ana sayfa olup olmadığını kontrol et
- * @returns {boolean} Ana sayfada olup olmadığımız
- */
-function isHomePage() {
-    // URL'yi kontrol et - category-detail.html veya başka bir sayfa değilse ana sayfadır
-    const currentPath = window.location.pathname;
-    return !currentPath.includes('category-detail.html') && 
-           !currentPath.includes('tool-detail.html');
-}
+    // Ana içerik bölümlerini gizle
+    const popularSection = document.getElementById('populer');
+    const categoriesSection = document.getElementById('kategoriler');
+    if(popularSection) popularSection.style.display = 'none';
+    if(categoriesSection) categoriesSection.style.display = 'none';
 
-/**
- * URL parametrelerini kontrol et ve gerekli işlemleri yap
- */
-function checkUrlParameters() {
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Kategori detay sayfası için - category-detail.js bunu ele alıyor
-    const categoryId = urlParams.get('id');
-    if (categoryId && window.location.pathname.includes('category-detail.html')) {
-        return; // Category detail sayfasında olduğumuz için başka bir şey yapmaya gerek yok
+
+    if (!searchResultsContainer || !resultsTitle || !searchResultsSection) {
+        console.error('Search result elements not found.');
+        return;
     }
-    
-    // Ana sayfada özel bir parametre olup olmadığını kontrol et
-    const filterCategory = urlParams.get('filter');
-    if (filterCategory) {
-        scrollToSection('kategoriler');
-        highlightCategory(filterCategory);
+
+    if (searchTerm === '') {
+        searchResultsContainer.innerHTML = '<p class="no-results">Lütfen bir arama terimi girin.</p>';
+        resultsTitle.textContent = 'Arama Sonuçları';
+        searchResultsSection.style.display = 'block';
+        return;
     }
-    
-    // Arama parametresi varsa
-    const searchQuery = urlParams.get('q');
-    if (searchQuery) {
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-            searchInput.value = searchQuery;
-            // Arama sonuçlarını göster
-            if (window.searchManager) {
-                window.searchManager.performSearch();
+
+    resultsTitle.textContent = `"${searchTerm}" için sonuçlar`;
+    searchResultsContainer.innerHTML = '<p>Aranıyor...</p>'; // Yükleniyor mesajı
+    searchResultsSection.style.display = 'block';
+
+    try {
+        // API'den arama yap (Backend'de ?search=term veya ?name_like=term gibi bir endpoint olmalı)
+        // Şimdilik tüm araçları çekip frontend'de filtreliyoruz, bu ideal değil.
+        // Önerilen: const searchResults = await window.api.getTools(`?q=${encodeURIComponent(searchTerm)}`);
+        // Bu `q` parametresini backend'de işlemeniz gerekir.
+
+        const allTools = await window.api.getTools(); // Tüm araçları çek
+        if (allTools) {
+            const lowerSearchTerm = searchTerm.toLowerCase();
+            const filteredTools = allTools.filter(tool =>
+                (tool.name && tool.name.toLowerCase().includes(lowerSearchTerm)) ||
+                (tool.description && tool.description.toLowerCase().includes(lowerSearchTerm)) ||
+                (tool.tags && Array.isArray(tool.tags) && tool.tags.some(tag => tag.toLowerCase().includes(lowerSearchTerm)))
+            );
+
+            if (window.ui && typeof window.ui.displaySearchResults === 'function') {
+                window.ui.displaySearchResults(filteredTools, 'searchResults');
             } else {
-                UI.renderSearchResults(searchQuery);
+                 console.error('ui.displaySearchResults function not found.');
+                 searchResultsContainer.innerHTML = '<p class="no-results">Arama sonuçları gösterilemedi (UI hatası).</p>';
             }
+
+            if (filteredTools.length === 0) {
+                 resultsTitle.textContent = `"${searchTerm}" için sonuç bulunamadı`;
+            }
+
+        } else {
+            searchResultsContainer.innerHTML = '<p class="no-results">Arama sırasında bir hata oluştu veya araç bulunamadı.</p>';
         }
+    } catch (error) {
+        console.error('Error during search:', error);
+        searchResultsContainer.innerHTML = '<p class="no-results">Arama sırasında bir hata oluştu.</p>';
     }
 }
 
-/**
- * Belirli bir bölüme kaydır
- * @param {string} sectionId - Kaydırılacak bölümün ID'si
- */
-function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
-}
+function clearSearchResultsAndShowMain() {
+    const searchInput = document.getElementById('searchInput');
+    const searchResultsSection = document.getElementById('searchResultsSection');
+    const searchResultsContainer = document.getElementById('searchResults');
 
-/**
- * Belirli bir kategoriyi vurgula
- * @param {string} categoryId - Vurgulanacak kategorinin ID'si
- */
-function highlightCategory(categoryId) {
-    const categoryCard = document.querySelector(`.category-card[data-id="${categoryId}"]`);
-    if (categoryCard) {
-        // Vurgulama efekti ekle
-        categoryCard.classList.add('highlight');
-        
-        // Bir süre sonra vurgulamayı kaldır
-        setTimeout(() => {
-            categoryCard.classList.remove('highlight');
-        }, 2000);
-    }
-}
+    if(searchInput) searchInput.value = '';
+    if(searchResultsContainer) searchResultsContainer.innerHTML = '';
+    if(searchResultsSection) searchResultsSection.style.display = 'none';
 
-/**
- * Animasyonları başlat
- */
-function initAnimations() {
-    // Görünüm içi elementler için gözlemci oluştur
-    if ('IntersectionObserver' in window) {
-        const appearOptions = {
-            threshold: 0.25,
-            rootMargin: "0px 0px -100px 0px"
-        };
-        
-        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('appear');
-                appearOnScroll.unobserve(entry.target);
-            });
-        }, appearOptions);
-        
-        // Animasyon uygulanacak elementler
-        const animatedElements = document.querySelectorAll('.fade-in, .slide-in, .tool-card, .category-card');
-        animatedElements.forEach(element => {
-            if (!element.classList.contains('fade-in') && !element.classList.contains('slide-in')) {
-                element.classList.add('fade-in');
-            }
-            appearOnScroll.observe(element);
-        });
-    }
-    
-    // Sayfa içi bağlantılar için düzgün kaydırma
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if (targetId !== '#') {
-                e.preventDefault();
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-}
-
-/**
- * Responsive özellikler için ayarlar
- */
-function setupResponsiveFeatures() {
-    // Mobil menü toggle butonu oluştur
-    if (window.innerWidth < 768 && !document.querySelector('.menu-toggle')) {
-        createMobileMenuToggle();
-    }
-    
-    // Pencere yeniden boyutlandırıldığında kontrol et
-    window.addEventListener('resize', () => {
-        if (window.innerWidth < 768 && !document.querySelector('.menu-toggle')) {
-            createMobileMenuToggle();
-        } else if (window.innerWidth >= 768) {
-            // Mobil menü açıksa kapat
-            const nav = document.querySelector('header nav');
-            if (nav && nav.classList.contains('active')) {
-                nav.classList.remove('active');
-            }
-            
-            // Toggle butonu varsa kaldır
-            const menuToggle = document.querySelector('.menu-toggle');
-            if (menuToggle) {
-                menuToggle.remove();
-            }
-        }
-    });
-}
-
-/**
- * Mobil menü toggle butonu oluştur
- */
-function createMobileMenuToggle() {
-    const menuToggle = document.createElement('div');
-    menuToggle.className = 'menu-toggle';
-    menuToggle.innerHTML = '☰';
-    
-    const header = document.querySelector('header .container');
-    if (header) {
-        header.appendChild(menuToggle);
-        
-        // Toggle butonuna tıklandığında menüyü aç/kapat
-        menuToggle.addEventListener('click', () => {
-            const nav = document.querySelector('header nav');
-            if (nav) {
-                nav.classList.toggle('active');
-                
-                // Menü açıkken toggle simgesini değiştir
-                menuToggle.innerHTML = nav.classList.contains('active') ? '✕' : '☰';
-            }
-        });
-    }
+    // Ana içerik bölümlerini tekrar görünür yap
+    const popularSection = document.getElementById('populer');
+    const categoriesSection = document.getElementById('kategoriler');
+    if(popularSection) popularSection.style.display = 'block'; // veya 'flex', 'grid' vb. orijinal display değeri
+    if(categoriesSection) categoriesSection.style.display = 'block'; // veya 'flex', 'grid' vb. orijinal display değeri
 }
