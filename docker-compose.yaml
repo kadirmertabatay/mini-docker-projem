@@ -1,23 +1,56 @@
-version: '3.8' # Docker Compose dosya formatının sürümü
+version: '3.8'
 
 services:
   # Frontend Servisi (Nginx)
   frontend:
     build:
-      context: . # Dockerfile'ın bulunduğu dizin (proje kök dizini)
-      dockerfile: Dockerfile # Kullanılacak Dockerfile'ın adı (proje kök dizinindeki)
-    container_name: ai_tools_frontend_container # Container'a verilecek özel bir isim
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_tools_frontend_container
     ports:
-      - "8080:80" # Host'un 8080 portunu container'ın 80 portuna yönlendir
-    restart: unless-stopped # Container bir hata nedeniyle durursa veya Docker yeniden başlatılırsa otomatik olarak yeniden başlat (durdurulmadığı sürece)
-    # Volumes (henüz frontend için özel bir volume ihtiyacımız yok ama ileride gerekebilir)
-    # networks: (henüz tek servis olduğu için özel network tanımına gerek yok)
+      - "8080:80"
+    restart: unless-stopped
+    depends_on: # Frontend'in başlamadan önce API'nin hazır olmasını bekleyebilir (isteğe bağlı ama iyi pratik)
+      - backend  # backend servisi ayağa kalktıktan sonra frontend başlasın
+    networks:
+      - app_network
 
-# Volumes (Genel volume tanımları, ileride veritabanı için kullanacağız)
-# volumes:
-#   db_data:
+  # Backend Servisi (Node.js API) - ŞİMDİLİK BOŞ BIRAKACAĞIZ, SONRA DOLDURACAĞIZ
+  backend:
+    build:
+      context: ./backend # backend klasörünü işaret et
+      dockerfile: Dockerfile # backend/Dockerfile dosyasını kullanacak
+    container_name: ai_tools_backend_container
+    restart: unless-stopped
+    ports: # API'nin dışarıya açılacak portu (örneğin 3000)
+      - "3000:3000" # Host:Container
+    environment: # Ortam değişkenleri
+      - MONGO_URI=mongodb://mongodb:27017/ai_tools_db # MongoDB bağlantı string'i
+      - PORT=3000
+    depends_on:
+      - mongodb # API başlamadan önce MongoDB'nin hazır olmasını bekle
+    volumes:
+      - ./backend:/usr/src/app # Geliştirme sırasında kod değişikliklerinin anında yansıması için (opsiyonel)
+      - /usr/src/app/node_modules # node_modules'ı host'tan mount etme (imajdaki kalsın)
+    networks:
+      - app_network
 
-# Networks (Genel network tanımları, ileride servisler arası iletişim için kullanacağız)
-# networks:
-#   app_network:
-#     driver: bridge
+  # Veritabanı Servisi (MongoDB)
+  mongodb:
+    image: mongo:latest # Docker Hub'dan resmi MongoDB imajını kullan
+    container_name: ai_tools_mongodb_container
+    restart: unless-stopped
+    ports: # MongoDB portunu dışarıya açmak geliştirme için faydalı olabilir, ama zorunlu değil.
+      - "27017:27017" # Host:Container (Gerekiyorsa aç, production için genellikle kapalı tutulur)
+    volumes:
+      - db_data:/data/db # MongoDB verilerini kalıcı hale getirmek için volume kullan
+      # - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro # İlk verileri yüklemek için (ileride)
+    networks:
+      - app_network
+
+volumes: # Kalıcı veri depolaması için volume tanımla
+  db_data:
+
+networks: # Servisler arası iletişim için özel bir ağ oluştur
+  app_network:
+    driver: bridge

@@ -1,4 +1,4 @@
-.git
-.vscode
-README.md
-# Projeye dahil edilmeyecek diğer dosyalar
+node_modules
+npm-debug.log
+.DS_Store
+.env
